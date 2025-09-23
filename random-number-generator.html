@@ -13,30 +13,56 @@
 
         body {
             font-family: 'Arial', sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 50%, #87ceeb 100%);
             min-height: 100vh;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
             color: white;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        /* Ocean waves animation */
+        .waves {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 300%;
+            height: 100px;
+            background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 120'%3E%3Cpath d='M0,60 C300,120 600,0 900,60 C1050,90 1150,30 1200,60 L1200,120 L0,120 Z' fill='%23006699'/%3E%3C/svg%3E") repeat-x;
+            animation: wave 15s linear infinite;
+            z-index: 1;
+        }
+
+        @keyframes wave {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-66.67%); }
         }
 
         .container {
-            background: rgba(255, 255, 255, 0.1);
+            background: rgba(139, 69, 19, 0.2);
             backdrop-filter: blur(10px);
             border-radius: 20px;
             padding: 40px;
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
             text-align: center;
-            max-width: 600px;
+            max-width: 700px;
             width: 90%;
+            border: 3px solid #8B4513;
+            position: relative;
+            z-index: 10;
         }
 
         h1 {
             margin-bottom: 30px;
             font-size: 2.5em;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+            text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.7);
+            color: #FFD700;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 2px;
         }
 
         .controls {
@@ -69,26 +95,31 @@
         }
 
         .generate-btn {
-            background: linear-gradient(45deg, #4CAF50, #45a049);
-            color: white;
-            border: none;
+            background: linear-gradient(45deg, #8B4513, #A0522D);
+            color: #FFD700;
+            border: 3px solid #654321;
             padding: 15px 30px;
             font-size: 18px;
             border-radius: 25px;
             cursor: pointer;
             transition: all 0.3s ease;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 1px;
         }
 
         .generate-btn:hover {
             transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.6);
+            background: linear-gradient(45deg, #A0522D, #CD853F);
         }
 
         .generate-btn:disabled {
             background: #666;
             cursor: not-allowed;
             transform: none;
+            color: #ccc;
         }
 
         .dials-container {
@@ -103,29 +134,53 @@
             width: 80px;
             height: 80px;
             border-radius: 50%;
-            background: linear-gradient(145deg, #f0f0f0, #cacaca);
+            background: linear-gradient(145deg, #8B4513, #A0522D);
             display: flex;
             align-items: center;
             justify-content: center;
             font-size: 24px;
             font-weight: bold;
-            color: #333;
-            box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.1);
+            color: #FFD700;
+            box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.3), 0 4px 8px rgba(0, 0, 0, 0.4);
             position: relative;
             overflow: hidden;
+            border: 3px solid #654321;
+        }
+
+        .dial::before {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at 30% 30%, rgba(255, 215, 0, 0.3) 0%, transparent 50%);
+            border-radius: 50%;
+            top: 0;
+            left: 0;
+        }
+
+        .dial::after {
+            content: '⚓';
+            position: absolute;
+            top: -8px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 16px;
+            color: #FFD700;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
         }
 
         .dial.spinning {
-            animation: spin 0.1s linear infinite;
+            animation: helmSpin 0.1s linear infinite;
         }
 
         .dial.stopped {
-            background: linear-gradient(145deg, #4CAF50, #45a049);
-            color: white;
+            background: linear-gradient(145deg, #8B4513, #A0522D);
+            color: #FFD700;
             animation: none;
+            box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.3), 0 4px 8px rgba(0, 0, 0, 0.4), 0 0 15px rgba(255, 215, 0, 0.5);
         }
 
-        @keyframes spin {
+        @keyframes helmSpin {
             from { transform: rotate(0deg); }
             to { transform: rotate(360deg); }
         }
@@ -191,25 +246,153 @@
         .reset-btn:hover {
             transform: translateY(-1px);
         }
+
+        /* Character Container */
+        .pirate-container {
+            position: relative;
+            margin: 20px 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .pirate {
+            width: 200px;
+            height: 250px;
+            position: relative;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+            border-radius: 10px;
+            overflow: visible;
+        }
+
+        .pirate:hover {
+            transform: scale(1.05);
+        }
+
+        .pirate img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 10px;
+        }
+
+        /* Fixed shoulder */
+        .shoulder {
+            position: absolute;
+            width: 30px;
+            height: 30px;
+            background: linear-gradient(145deg, #FDBCB4, #F4A460);
+            border-radius: 50%;
+            top: 50%;
+            right: 20%;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+            z-index: 10;
+        }
+
+        /* Fist hand */
+        .fist {
+            position: absolute;
+            width: 48px;
+            height: 48px;
+            background-image: url('fist.png');
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-position: center;
+            top: calc(50% + 10px);
+            right: calc(35% - 60px);
+            transform-origin: center;
+            z-index: 10;
+            cursor: pointer;
+        }
+
+        /* Rope hanging from top */
+        .rope {
+            width: 8px;
+            height: 300px;
+            background: linear-gradient(180deg, #8B4513, #A0522D, #8B4513);
+            border-radius: 4px;
+            position: absolute;
+            right: calc(45% - 60px);
+            top: 0;
+            transform-origin: top center;
+            transition: transform 0.3s ease;
+            z-index: 5;
+        }
+
+        .rope::before {
+            content: '';
+            width: 100%;
+            height: 100%;
+            background: repeating-linear-gradient(
+                180deg,
+                #654321 0px,
+                #654321 2px,
+                #8B4513 2px,
+                #8B4513 4px
+            );
+            border-radius: 4px;
+            position: absolute;
+        }
+
+        .rope.pulling {
+            animation: ropePull 0.5s ease-in-out;
+        }
+
+        @keyframes ropePull {
+            0% { transform: translateY(0) scaleY(1); }
+            50% { transform: translateY(10px) scaleY(1.1); }
+            100% { transform: translateY(0) scaleY(1); }
+        }
+
+        .pirate.pulling .fist {
+            animation: fistPull 0.5s ease-in-out;
+        }
+
+        @keyframes fistPull {
+            0% { 
+                top: calc(50% + 10px);
+                right: calc(35% - 60px);
+            }
+            50% { 
+                top: calc(50% + 15px);
+                right: calc(35% - 60px);
+            }
+            100% { 
+                top: calc(50% + 10px);
+                right: calc(35% - 60px);
+            }
+        }
+
     </style>
 </head>
 <body>
+    <div class="waves"></div>
+    
     <div class="container">
-        <h1>🎲 Visual Random Number Generator</h1>
+        <h1>🏴‍☠️ Pirate's Booty 🏴‍☠️</h1>
+        
+        <div class="pirate-container">
+            <div class="pirate" id="pirate">
+                <img src="lucius.gif" alt="Lucius Character">
+                <div class="fist"></div>
+                <div class="rope" id="rope"></div>
+            </div>
+        </div>
         
         <div class="controls">
             <div class="range-inputs">
                 <label>Min: <input type="number" id="minRange" value="0" min="0"></label>
                 <label>Max: <input type="number" id="maxRange" value="9999" min="0"></label>
             </div>
-            <button class="generate-btn" id="generateBtn">Generate Random Number</button>
+            <button class="generate-btn" id="generateBtn">Give it a yank!</button>
         </div>
 
         <div class="dials-container" id="dialsContainer">
             <!-- Dials will be generated dynamically -->
         </div>
 
-        <div class="result" id="result">Click Generate to start!</div>
+        <div class="result" id="result">Click "Give it a yank!" to start!</div>
 
         <div class="stats" id="stats" style="display: none;">
             <h3>Randomness Statistics</h3>
@@ -260,6 +443,8 @@
                 this.result = document.getElementById('result');
                 this.stats = document.getElementById('stats');
                 this.resetBtn = document.getElementById('resetBtn');
+                this.pirate = document.getElementById('pirate');
+                this.rope = document.getElementById('rope');
             }
 
             setupEventListeners() {
@@ -303,7 +488,10 @@
                 
                 this.isGenerating = true;
                 this.generateBtn.disabled = true;
-                this.generateBtn.textContent = 'Generating...';
+                this.generateBtn.textContent = 'Yanking...';
+                
+                // Animate pirate pulling rope
+                this.animatePiratePull();
                 
                 // Reset dials
                 this.dials.forEach(dial => {
@@ -311,7 +499,7 @@
                     dial.textContent = '?';
                 });
                 
-                this.result.textContent = 'Generating...';
+                this.result.textContent = 'Pirate is yanking...';
                 
                 // Generate random number
                 const randomNum = Math.floor(Math.random() * (this.maxRange - this.minRange + 1)) + this.minRange;
@@ -320,7 +508,7 @@
                 await this.animateDials(randomNum);
                 
                 // Update result
-                this.result.textContent = randomNum;
+                this.result.textContent = `🏴‍☠️ Treasure Found: ${randomNum} 🏴‍☠️`;
                 
                 // Add to statistics
                 this.generatedNumbers.push(randomNum);
@@ -328,7 +516,19 @@
                 
                 this.isGenerating = false;
                 this.generateBtn.disabled = false;
-                this.generateBtn.textContent = 'Generate Random Number';
+                this.generateBtn.textContent = 'Give it a yank!';
+            }
+
+            animatePiratePull() {
+                // Add pulling class to pirate and rope
+                this.pirate.classList.add('pulling');
+                this.rope.classList.add('pulling');
+                
+                // Remove classes after animation
+                setTimeout(() => {
+                    this.pirate.classList.remove('pulling');
+                    this.rope.classList.remove('pulling');
+                }, 500);
             }
 
             async animateDials(number) {
@@ -521,7 +721,7 @@
             resetStatistics() {
                 this.generatedNumbers = [];
                 this.stats.style.display = 'none';
-                this.result.textContent = 'Click Generate to start!';
+                this.result.textContent = 'Click "Give it a yank!" to start!';
                 
                 // Reset dials
                 this.dials.forEach(dial => {
