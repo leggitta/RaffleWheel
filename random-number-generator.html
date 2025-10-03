@@ -332,8 +332,8 @@
         
         <div class="controls">
             <div class="range-inputs">
-                <label>Min: <input type="number" id="minRange" value="0" min="0"></label>
-                <label>Max: <input type="number" id="maxRange" value="9999" min="0"></label>
+                <label>Min: <input type="number" id="minRange" value="1001" min="0"></label>
+                <label>Max: <input type="number" id="maxRange" value="3960" min="0"></label>
             </div>
             <button class="generate-btn" id="generateBtn">Give it a yank!</button>
         </div>
@@ -348,8 +348,8 @@
     <script>
         class RandomNumberGenerator {
             constructor() {
-                this.minRange = 0;
-                this.maxRange = 9999;
+                this.minRange = 1001;
+                this.maxRange = 3960;
                 this.dials = [];
                 this.isGenerating = false;
                 
