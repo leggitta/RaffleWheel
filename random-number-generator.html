@@ -375,8 +375,8 @@
             }
 
             updateRange() {
-                this.minRange = parseInt(this.minInput.value) || 0;
-                this.maxRange = parseInt(this.maxInput.value) || 9999;
+                this.minRange = parseInt(this.minInput.value) || 1001;
+                this.maxRange = parseInt(this.maxInput.value) || 3960;
                 
                 if (this.minRange > this.maxRange) {
                     this.minRange = this.maxRange;
